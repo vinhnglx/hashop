@@ -25,19 +25,18 @@ gem 'rubocop'
 
 group :development, :test do
   ### Debugging
-  gem 'byebug'
   gem 'awesome_print'
+  gem 'byebug'
 
   ### Annotate schema
   gem 'annotate'
 
   ### Unit Test
-  gem 'rspec-rails'
   gem 'listen'
+  gem 'rspec-rails'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'simplecov', require: false
 end
-
