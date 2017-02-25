@@ -1,6 +1,4 @@
 #!/bin/bash
-set -v
-if [ -n "${TRAVIS_PULL_REQUEST}" ] && [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
   # Travis-CI
   #
   # git clone --depth=50 \
@@ -51,6 +49,3 @@ if [ -n "${TRAVIS_PULL_REQUEST}" ] && [ "${TRAVIS_PULL_REQUEST}" != "false" ]; t
       --reporter Saddler::Reporter::Github::PullRequestComment
 
   github-status-notifier notify --exit-status $? --context saddler/rubocop
-fi
-
-exit 0
