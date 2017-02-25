@@ -26,6 +26,9 @@ gem 'rubocop'
 ### Travis
 gem 'travis'
 
+### Coverall
+gem 'coveralls', require: false
+
 group :development, :test do
   ### Debugging
   gem 'awesome_print'
