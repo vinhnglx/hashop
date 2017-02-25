@@ -26,6 +26,10 @@ gem 'rubocop'
 ### Travis
 gem 'travis'
 
+### Automated CodeReview
+gem 'saddler'
+gem 'saddler-reporter-github'
+
 group :development, :test do
   ### Debugging
   gem 'awesome_print'
