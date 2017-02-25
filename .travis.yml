@@ -7,10 +7,12 @@ rvm:
 script:
   - bundle exec rake db:create
   - bundle exec rake db:migrate
-  - bundle exec rspec spec
+  - bundle exec rspec spec --format progress
 
 services:
   - postgresql
 
 secure: "iuUaqwQPp+/0w+cBqhsXVAYjPbylM09dHHov2KoQKrArk98rpCRzeqkJsomdH/oEalNjrGGa0XxtvwUEVKxcbNGos5uFqdoQEyvy+I6fnAWHQE+LAElsXkiBBYEF+4weTqLWk6/4W7NeEYlUVlWhR9r8vviC33cUAelcN9gHAIs9zvZltDjFkVSwkGGbGGegb2w3vskCseez7sb1LC34FV/6mCfglymABJxPWriQ8dxjkC/Ypr0s9QUYBvJ9JJhViA4sU8MDNzp5hv1yq7XJEILlNiY3cs5RT1NKnBibASJnUKxcT6lb/EBh0ch0pIF7YNayHCysS1xC8RZ4ODREyimHE78pKErieXjBeiLt/HO+4eYzu19R4c51j8kxV9ig7vGuqj8DRxXy6xURFwBA6P+bJ5M+v7dSdDgRz2ESU61H0L4SqlLzGrFnHiVrCl5qeGsL6e+I+FSXknnxfJASZaq7e/ueLb0rtQ0uyBhxDvdVf4T0eykIuCIXBHGseWOJoy/hvZeG5pv3abnCMu5NOZAw/uIGWW6QVUZZdHwZ0m4hN4AMGvuVQ52VEiw0tJmB7c8LKs/EVXy4Ng6yCp6YNFXyXNol/tqKIFCMUAVvS7qaUR4mgQUAIvozMaS+0P1EMcP2IotFzqR7HAzk8Qo4Z/4DZ1wHauBX2OD9QQZ8izw="
+
+before_script: "scripts/auto-check.sh"
 
