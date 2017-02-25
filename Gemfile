@@ -23,6 +23,9 @@ gem 'bullet'
 gem 'rails_best_practices'
 gem 'rubocop'
 
+### Travis
+gem 'travis'
+
 group :development, :test do
   ### Debugging
   gem 'awesome_print'
