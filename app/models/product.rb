@@ -6,8 +6,8 @@
 #  name       :string
 #  price      :integer
 #  sale_price :integer
-#  under_sale :boolean
-#  sold_out   :boolean
+#  under_sale :boolean          default(FALSE)
+#  sold_out   :boolean          default(FALSE)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
