@@ -33,6 +33,7 @@ group :development, :test do
 
   ### Unit Test
   gem 'rspec-rails'
+  gem 'listen'
 end
 
 group :test do
