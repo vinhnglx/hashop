@@ -34,7 +34,7 @@ RSpec.describe Category, type: :model do
     end
 
     it 'is invalid if categories has same name' do
-      category_1 = create(:category, name: "Brush")
+      create(:category, name: "Brush")
 
       category.name = "Brush"
       expect(subject).to be_invalid

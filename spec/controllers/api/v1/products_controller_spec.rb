@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
-
   before do
     2.times.each { create(:category) }
     5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}") }
@@ -25,5 +24,4 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect(jdata['data'].length).to eq 5
     end
   end
-
 end

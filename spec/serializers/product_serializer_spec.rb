@@ -11,7 +11,7 @@ RSpec.describe ProductSerializer do
     jdata = subject['data']['attributes']
     product_attributes = ['name', 'price', 'salePrice', 'underSale', 'soldOut']
     product_attributes.each do |i|
-      expect(jdata.has_key?(i)).to be_truthy
+      expect(jdata.key?(i)).to be_truthy
     end
   end
 end
