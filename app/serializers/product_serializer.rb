@@ -17,10 +17,8 @@
 #  index_products_on_category_id  (category_id)
 #
 
-class Product < ApplicationRecord
-  # Validations
-  validates :name, :price, presence: true
+class ProductSerializer < ActiveModel::Serializer
+  attributes :id, :name, :price, :sale_price, :under_sale, :sold_out
 
-  # Associations
   belongs_to :category
 end

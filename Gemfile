@@ -38,6 +38,7 @@ group :development, :test do
   gem 'annotate'
 
   ### Unit Test
+  gem 'factory_girl_rails'
   gem 'listen'
   gem 'rspec-rails'
 end

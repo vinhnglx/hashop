@@ -1,4 +1,5 @@
 ActiveModelSerializers.config.adapter = :json_api
+ActiveModelSerializers.config.key_transform = :camel_lower
 
 api_mime_types = %W(
   application/vnd.api+json

@@ -20,13 +20,10 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  subject { described_class.new(name: "AQUA Contact Lens", price: 2450) }
-
   context 'attributes' do
     it 'is valid with valid attributes' do
-      category_id = Category.create!(name: "Classes").id
-      subject.category_id = category_id
-      expect(subject).to be_valid
+      product = build(:product)
+      expect(product).to be_valid
     end
   end
 
@@ -37,22 +34,22 @@ RSpec.describe Product, type: :model do
   end
 
   context 'validations' do
+    let(:product) { build(:product) }
     it 'is invalid without product name' do
-      subject.name = nil
-      expect(subject).to be_invalid
+      product.name = nil
+      expect(product).to be_invalid
     end
 
     it 'is invalid without price' do
-      subject.price = nil
-      expect(subject).to be_invalid
+      product.price = nil
+      expect(product).to be_invalid
     end
   end
 
   context 'associations' do
     it "belongs to category" do
-      association = described_class.reflect_on_association(:category)
+      association = Product.reflect_on_association(:category)
       expect(association.macro).to eq :belongs_to
     end
   end
 end
-

@@ -8,10 +8,8 @@
 #  updated_at :datetime         not null
 #
 
-class Category < ApplicationRecord
-  # Validations
-  validates :name, presence: true, uniqueness: true
+class CategorySerializer < ActiveModel::Serializer
+  attributes :name
 
-  # Associations
   has_many :products
 end

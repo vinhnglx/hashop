@@ -17,10 +17,11 @@
 #  index_products_on_category_id  (category_id)
 #
 
-class Product < ApplicationRecord
-  # Validations
-  validates :name, :price, presence: true
+FactoryGirl.define do
+  factory :product do
+    name "AQUA Contact Lens"
+    price 2244
 
-  # Associations
-  belongs_to :category
+    category
+  end
 end
