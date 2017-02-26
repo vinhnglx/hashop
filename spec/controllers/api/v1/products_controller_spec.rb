@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe API::V1::ProductsController, type: :controller do
+RSpec.describe Api::V1::ProductsController, type: :controller do
 
   before do
     2.times.each { create(:category) }

@@ -1,8 +1,8 @@
-module API
+module Api
   module V1
     class ProductsController < ApplicationController
       def index
-        render json: Product.all, include: :category
+        render json: Product.includes(:category).all, include: :category
       end
     end
   end
