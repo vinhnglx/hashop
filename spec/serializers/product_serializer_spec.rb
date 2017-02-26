@@ -14,4 +14,9 @@ RSpec.describe ProductSerializer do
       expect(jdata.key?(i)).to be_truthy
     end
   end
+
+  it "should response GET single product API Endpoint" do
+    links = subject['data']['links']
+    expect(links['self']).to eq "/api/v1/products/#{product.id}"
+  end
 end

@@ -18,7 +18,9 @@
 #
 
 class ProductSerializer < ActiveModel::Serializer
+  include Rails.application.routes.url_helpers
   attributes :id, :name, :price, :sale_price, :under_sale, :sold_out
+  link(:self) { api_v1_product_path(object) }
 
   belongs_to :category
 end
