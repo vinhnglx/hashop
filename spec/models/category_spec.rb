@@ -31,5 +31,12 @@ RSpec.describe Category, type: :model do
     it 'is invalid without name' do
       expect(subject).to be_invalid
     end
+
+    it 'is invalid if categories has same name' do
+      category_1 = Category.create!(name: "Brush")
+
+      subject.name = "Brush"
+      expect(subject).to be_invalid
+    end
   end
 end
