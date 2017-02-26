@@ -40,6 +40,7 @@ group :development, :test do
   ### Unit Test
   gem 'listen'
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :test do
