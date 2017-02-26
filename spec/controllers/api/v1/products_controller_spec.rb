@@ -1,13 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
-  before do
-    2.times.each { create(:category) }
-    5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}") }
-  end
-
   describe "GET multiple products" do
     before do
+      2.times.each { create(:category) }
+      5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}") }
+
       get :index
     end
 
@@ -27,10 +25,10 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
   describe "GET single product" do
     context "with valid data" do
-      let(:product) { Product.first }
+      let(:product) { create(:product) }
 
       before do
-        get :show, params: {id: product.id}
+        get :show, params: { id: product.id }
       end
 
       it "returns http success" do
@@ -49,6 +47,19 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     end
 
     context "with invalid data" do
+      before do
+        get :show, params: { id: '930a' }
+      end
+
+      it "returns http status code: not found" do
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "returns JSON:API error block" do
+        jdata = JSON.parse response.body
+        expect(jdata['errors'][0]['status']).to eq 404
+        expect(jdata['errors'][0]['detail']).to eq 'Wrong ID provided'
+      end
     end
   end
 end
