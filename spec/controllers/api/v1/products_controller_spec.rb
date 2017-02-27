@@ -29,6 +29,19 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
           expect(desc_prices).to eq [4, 3, 2, 1, 0]
         end
       end
+
+      context "paginations" do
+        it "returns paginated products" do
+          get :index, params: { page: { number: 2, size: 1 } }
+
+          jdata = JSON.parse response.body
+          expect(URI.unescape(jdata['links']['self'])).to eq "http://test.host/api/v1/products?page[number]=2&page[size]=1"
+          expect(URI.unescape(jdata['links']['first'])).to eq "http://test.host/api/v1/products?page[number]=1&page[size]=1"
+          expect(URI.unescape(jdata['links']['prev'])).to eq "http://test.host/api/v1/products?page[number]=1&page[size]=1"
+          expect(URI.unescape(jdata['links']['next'])).to eq "http://test.host/api/v1/products?page[number]=3&page[size]=1"
+          expect(URI.unescape(jdata['links']['last'])).to eq "http://test.host/api/v1/products?page[number]=5&page[size]=1"
+        end
+      end
     end
   end
 

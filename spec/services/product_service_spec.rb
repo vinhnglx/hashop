@@ -12,4 +12,20 @@ RSpec.describe ProductService do
       expect(product_service_desc.sort_params).to eq({"price"=>:desc})
     end
   end
+
+  describe "#current_page" do
+    it "returns current page" do
+      product_service_page = ProductService.new(Product.includes(:category), {page: { number: 2, size: 1 }})
+
+      expect(product_service_page.current_page).to eq 2
+    end
+  end
+
+  describe "#page_size" do
+    it "returns page size" do
+      product_service_page = ProductService.new(Product.includes(:category), {page: { number: 2, size: 1 }})
+
+      expect(product_service_page.page_size).to eq 1
+    end
+  end
 end
