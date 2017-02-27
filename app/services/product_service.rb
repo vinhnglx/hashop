@@ -4,6 +4,8 @@ class ProductService
   DEFAULT_SORTING = { created_at: :desc }.freeze
   SORTABLE_FIELDS = ['price'].freeze
 
+  PER_PAGE = 5.freeze
+
   # Public: Create constructor
   #
   # Parameters
@@ -16,7 +18,7 @@ class ProductService
   #   ProductService.new(Product.includes(:category), params)
   #
   # Returns nothing
-  def initialize(products = Product.includes(:category), params)
+  def initialize(products, params)
     @products_list = products
     @params = params
   end
@@ -30,7 +32,7 @@ class ProductService
   #
   # Returns sorted list of products
   def products
-    products_list.order(sort_params)
+    products_list.order(sort_params).page(current_page).per_page(page_size)
   end
 
   # Public: A hash that contain sorting's way
@@ -45,6 +47,30 @@ class ProductService
     fields = params[:sort].to_s.split(",")
 
     _allow_sort?(_transform(fields)) ? _transform(fields) : DEFAULT_SORTING
+  end
+
+  # Public: Get page number from parameter or default value
+  #
+  # Example
+  #
+  #   current_page
+  #   # => 5
+  #
+  # Returns page number
+  def current_page
+    (params.dig(:page, :number) || 1).to_i
+  end
+
+  # Public: Get page size from parameter or default value
+  #
+  # Example
+  #
+  #   page_size
+  #   # => 10
+  #
+  # Returns page size
+  def page_size
+    (params.dig(:page, :size) || PER_PAGE).to_i
   end
 
   private
