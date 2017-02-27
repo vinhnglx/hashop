@@ -20,7 +20,7 @@
 FactoryGirl.define do
   factory :product do
     name "AQUA Contact Lens"
-    price 2244
+    price Random.rand(1000..5000)
 
     category
   end

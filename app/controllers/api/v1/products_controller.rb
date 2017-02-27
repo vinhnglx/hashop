@@ -1,37 +1,23 @@
 module Api
   module V1
     class ProductsController < ApplicationController
-      before_action :_product, only: :show
-
       # GET /products
       # GET /products.json
       def index
-        render json: Product.includes(:category), include: :category
+        product_service = ProductService.new(Product.includes(:category), params)
+        render json: product_service.products, include: :category
       end
 
       # GET /products/1
       # GET /products/1.json
       def show
-        render json: @product, include: :category
+        product = Product.find(params[:id])
+        render json: product, include: :category
+      rescue ActiveRecord::RecordNotFound
+        product = Product.new
+        product.errors.add(:id, "Wrong ID provided")
+        render json: product, status: 404, serializer: ActiveModel::Serializer::ErrorSerializer
       end
-
-      private
-
-        # Private: This method will be called before actions
-        #
-        # Example
-        #
-        #   _product
-        #   # => #<Product id: 23, name: "xxx", price: xxx, sale_price: xxx ...>
-        #
-        # Returns a specific product
-        def _product
-          @product = Product.find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-          product = Product.new
-          product.errors.add(:id, "Wrong ID provided")
-          respond_with_errors(product, 404)
-        end
     end
   end
 end
