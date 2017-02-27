@@ -29,6 +29,9 @@ gem 'travis'
 ### Coverall
 gem 'coveralls', require: false
 
+### Pagination
+gem 'will_paginate'
+
 group :development, :test do
   ### Debugging
   gem 'awesome_print'
