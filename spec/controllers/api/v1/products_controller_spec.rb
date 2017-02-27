@@ -1,26 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ProductsController, type: :controller do
-  describe "GET multiple products" do
+  context "GET index" do
     before do
       2.times.each { create(:category) }
-      5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}") }
-
-      get :index
+      5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}", price: n) }
     end
 
-    it "returns http success" do
-      expect(response).to have_http_status(:success)
-    end
+    describe "returns all products" do
+      it "returns with JSON body containing all products" do
+        get :index
+        jdata = JSON.parse response.body
+        expect(jdata['data'].length).to eq 5
+      end
 
-    it "returns with JSON body containing all products" do
-      jdata = JSON.parse response.body
-      expect(jdata['data'].length).to eq 5
+      context "returns sorted products based on price" do
+        it "with asc: [sort]='price' " do
+          get :index, params: { sort: 'price' }
+          jdata = JSON.parse response.body
+          asc_prices = jdata['data'].map { |x| x['attributes']['price'] }
+          expect(asc_prices).to eq [0, 1, 2, 3, 4]
+        end
+
+        it "with desc: [sort]='-price'" do
+          get :index, params: { sort: '-price' }
+          jdata = JSON.parse response.body
+          desc_prices = jdata['data'].map { |x| x['attributes']['price'] }
+          expect(desc_prices).to eq [4, 3, 2, 1, 0]
+        end
+      end
     end
   end
 
-  describe "GET single product" do
-    context "with valid data" do
+  context "GET show" do
+    describe "with valid data" do
       let(:product) { create(:product) }
 
       before do
@@ -42,7 +55,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end
     end
 
-    context "with invalid data" do
+    describe "with invalid data" do
       before do
         get :show, params: { id: '930a' }
       end
