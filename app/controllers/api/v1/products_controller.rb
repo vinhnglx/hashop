@@ -1,8 +1,6 @@
 module Api
   module V1
     class ProductsController < ApplicationController
-      # before_action :_product, only: :show
-
       # GET /products
       # GET /products.json
       def index
