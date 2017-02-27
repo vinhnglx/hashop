@@ -1,23 +1,42 @@
 class ApplicationController < ActionController::API
-  private
-
-  # Private: Output the error message
-  #
-  # Parameters
-  #
-  #   object - Record object error
-  #   status - http status code
+  # Public: Output the routing error
   #
   # Example
   #
-  #   respond_with_errors(product, 404)
-  #   # => { errors: [ status: 404, id: 'id',
-  #                    detail: "Wrong ID provided"] }
+  #   get('/api/v230990/02390292')
+  #   # => { errors: [ { status: 404, title: 'Not Found' } ] }
   #
-  # Returns error object with JSON format
-  def respond_with_errors(object, status)
+  # Returns the JSON error message
+  def routing_error
     render json: {
-      errors: ErrorSerializer.serialize(object, status)
-    }, status: status
+      errors: [
+        {
+          status: 404,
+          title: "Not Found"
+        }
+      ]
+    }, status: 404
   end
+
+  private
+
+    # Private: Output the error message
+    #
+    # Parameters
+    #
+    #   object - Record object error
+    #   status - http status code
+    #
+    # Example
+    #
+    #   respond_with_errors(product, 404)
+    #   # => { errors: [ status: 404, id: 'id',
+    #                    detail: "Wrong ID provided"] }
+    #
+    # Returns error object with JSON format
+    def respond_with_errors(object, status)
+      render json: {
+        errors: ErrorSerializer.serialize(object, status)
+      }, status: status
+    end
 end
