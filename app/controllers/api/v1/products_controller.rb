@@ -17,23 +17,21 @@ module Api
 
       private
 
-      # Private: This method will be called before actions
-      #
-      # Example
-      #
-      #   _product
-      #   # => #<Product id: 23, name: "xxx", price: xxx, sale_price: xxx ...>
-      #
-      # Returns a specific product
-      def _product
-        begin
+        # Private: This method will be called before actions
+        #
+        # Example
+        #
+        #   _product
+        #   # => #<Product id: 23, name: "xxx", price: xxx, sale_price: xxx ...>
+        #
+        # Returns a specific product
+        def _product
           @product = Product.find(params[:id])
         rescue ActiveRecord::RecordNotFound
           product = Product.new
           product.errors.add(:id, "Wrong ID provided")
           respond_with_errors(product, 404)
         end
-      end
     end
   end
 end
