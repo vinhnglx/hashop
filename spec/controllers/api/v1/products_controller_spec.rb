@@ -13,10 +13,6 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns content-type: application/vnd.api+json" do
-      expect(response.content_type).to eq 'application/vnd.api+json'
-    end
-
     it "returns with JSON body containing all products" do
       jdata = JSON.parse response.body
       expect(jdata['data'].length).to eq 5
@@ -57,7 +53,6 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
       it "returns JSON:API error block" do
         jdata = JSON.parse response.body
-        expect(jdata['errors'][0]['status']).to eq 404
         expect(jdata['errors'][0]['detail']).to eq 'Wrong ID provided'
       end
     end
