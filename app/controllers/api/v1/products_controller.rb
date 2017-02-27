@@ -3,10 +3,14 @@ module Api
     class ProductsController < ApplicationController
       before_action :_product, only: :show
 
+      # GET /products
+      # GET /products.json
       def index
         render json: Product.includes(:category), include: :category
       end
 
+      # GET /products/1
+      # GET /products/1.json
       def show
         render json: @product, include: :category
       end
