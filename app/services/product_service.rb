@@ -1,5 +1,5 @@
 class ProductService
-  attr_reader :products_list, :paginator, :sortable
+  attr_reader :products_list
 
   # Public: Create constructor
   #
@@ -13,15 +13,17 @@ class ProductService
   #
   #   ProductService.new(
   #     Product.includes(:category),
-  #     PaginatorService.new(params[:page]),
-  #     SortableService.new(params[:page])
+  #     PaginatorService.new(params),
+  #     SortableService.new(params),
+  #     FilterableService.new(params)
   #   )
   #
   # Returns nothing
-  def initialize(products, paginator, sortable)
+  def initialize(products, paginator, sortable, filterable)
     @products_list = products
     @paginator = paginator
     @sortable = sortable
+    @filterable = filterable
   end
 
   # Public: Returns list of products
@@ -30,15 +32,17 @@ class ProductService
   #
   #   product_service = ProductService.new(
   #                       Product.includes(:category),
-  #                       PaginatorService.new(params[:page]),
-  #                       SortableService.new(params[:page])
+  #                       PaginatorService.new(params),
+  #                       SortableService.new(params),
+  #                       FilterableService.new(params)
   #                     )
   #   product_service.products
   #
   # Returns a list has been sorted, paging and filtering by type if needed.
   def products
     products_list.
-      order(sortable.sort_params).
-      page(paginator.current_page).per_page(paginator.page_size)
+      where(@filterable.filter_params).
+      order(@sortable.sort_params).
+      page(@paginator.current_page).per_page(@paginator.page_size)
   end
 end
