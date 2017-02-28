@@ -4,7 +4,11 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        product_service = ProductService.new(Product.includes(:category), params)
+        product_service = ProductService.new(
+          Product.includes(:category),
+          PaginatorService.new(params),
+          SortableService.new(params),
+        )
         render json: product_service.products, include: :category
       end
 
