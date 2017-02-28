@@ -37,4 +37,12 @@ RSpec.describe FilterableService do
       expect(filter_without_price.category_ids).to eq [category.id]
     end
   end
+
+  describe "#filter_params" do
+    it "returns query objects" do
+      expect(filter_without_params.filter_params).to eq({})
+      expect(filter_without_categories.filter_params).to be_a Arel::Nodes::LessThanOrEqual
+      expect(filter_without_price.filter_params).to be_a Arel::Nodes::In
+    end
+  end
 end
