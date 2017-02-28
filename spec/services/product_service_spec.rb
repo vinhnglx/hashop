@@ -1,31 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe ProductService do
-  let!(:product) { create(:product) }
-
-  describe "#sort_params" do
-    it "returns a hash contains sorting's way" do
-      product_service_asc = ProductService.new(Product.includes(:category), {sort: 'price'})
-      expect(product_service_asc.sort_params).to eq({"price"=>:asc})
-
-      product_service_desc = ProductService.new(Product.includes(:category), {sort: '-price'})
-      expect(product_service_desc.sort_params).to eq({"price"=>:desc})
-    end
+  before do
+    2.times.each { create(:category) }
+    5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}", price: n) }
   end
 
-  describe "#current_page" do
-    it "returns current page" do
-      product_service_page = ProductService.new(Product.includes(:category), {page: { number: 2, size: 1 }})
+  describe "#products" do
+    it "Returns a list has been sorted, paging and filtering by type if needed" do
+      product_service = ProductService.new(
+                          Product.includes(:category),
+                          PaginatorService.new({number: 2, size: 1}),
+                          SortableService.new({sort: 'price'})
+                        )
 
-      expect(product_service_page.current_page).to eq 2
-    end
-  end
+      expect(product_service.products.pluck(:price)).to eq [0, 1, 2, 3, 4]
 
-  describe "#page_size" do
-    it "returns page size" do
-      product_service_page = ProductService.new(Product.includes(:category), {page: { number: 2, size: 1 }})
+      product_service_desc = ProductService.new(
+                          Product.includes(:category),
+                          PaginatorService.new({number: 2, size: 1}),
+                          SortableService.new({sort: '-price'})
+                        )
 
-      expect(product_service_page.page_size).to eq 1
+      expect(product_service_desc.products.pluck(:price)).to eq [4, 3, 2, 1, 0]
     end
   end
 end
