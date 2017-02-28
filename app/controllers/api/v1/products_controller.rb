@@ -8,6 +8,7 @@ module Api
           Product.includes(:category),
           PaginatorService.new(params),
           SortableService.new(params),
+          FilterableService.new(params)
         )
         render json: product_service.products, include: :category
       end
