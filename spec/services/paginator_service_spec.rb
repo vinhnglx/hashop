@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe PaginatorService do
-
-  let!(:paginator) { PaginatorService.new({page: { number: 2, size: 1 } }) }
+  let!(:paginator) { PaginatorService.new(page: { number: 2, size: 1 }) }
 
   describe "#current_page" do
     it "returns current page" do

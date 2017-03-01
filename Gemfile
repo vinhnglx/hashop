@@ -32,6 +32,9 @@ gem 'coveralls', require: false
 ### Pagination
 gem 'will_paginate'
 
+### Caching
+gem 'dalli'
+
 group :development, :test do
   ### Debugging
   gem 'awesome_print'
