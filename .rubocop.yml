@@ -60,6 +60,12 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   Enabled: false
 
+Style/FirstParameterIndentation:
+  Enabled: false
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
 ##################### Lint ##################################
 
 Lint/UnderscorePrefixedVariableName:
