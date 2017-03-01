@@ -4,11 +4,11 @@ RSpec.describe FilterableService do
   let!(:category) { create(:category) }
 
   let!(:filter_without_params) { FilterableService.new }
-  let!(:filter_without_categories) { FilterableService.new({filter: {price: 3}}) }
-  let!(:filter_without_price) { FilterableService.new({filter: {categories: category.name}}) }
+  let!(:filter_without_categories) { FilterableService.new(filter: { price: 3 }) }
+  let!(:filter_without_price) { FilterableService.new(filter: { categories: category.name }) }
 
   before do
-    5.times.each {|i| create(:product, price: i+1, category: category) }
+    5.times.each { |i| create(:product, price: i + 1, category: category) }
   end
 
   describe "#price_parameter" do

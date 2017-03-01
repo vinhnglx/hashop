@@ -10,8 +10,8 @@ RSpec.describe ProductService do
     it "Returns a list has been sorted, paging and filtering by type if needed" do
       product_service = ProductService.new(
                           Product.includes(:category),
-                          PaginatorService.new({number: 2, size: 1}),
-                          SortableService.new({sort: 'price'}),
+                          PaginatorService.new(number: 2, size: 1),
+                          SortableService.new(sort: 'price'),
                           FilterableService.new
                         )
 
@@ -19,8 +19,8 @@ RSpec.describe ProductService do
 
       product_service_desc = ProductService.new(
                           Product.includes(:category),
-                          PaginatorService.new({number: 2, size: 1}),
-                          SortableService.new({sort: '-price'}),
+                          PaginatorService.new(number: 2, size: 1),
+                          SortableService.new(sort: '-price'),
                           FilterableService.new
                         )
 
@@ -28,18 +28,18 @@ RSpec.describe ProductService do
 
       product_service_filter_price = ProductService.new(
                           Product.includes(:category),
-                          PaginatorService.new({number: 2, size: 1}),
-                          SortableService.new({sort: '-price'}),
-                          FilterableService.new({filter: {price: 3}})
+                          PaginatorService.new(number: 2, size: 1),
+                          SortableService.new(sort: '-price'),
+                          FilterableService.new(filter: { price: 3 })
                         )
 
       expect(product_service_filter_price.products.pluck(:price)).to eq [3, 2, 1, 0]
 
       product_service_filter_category = ProductService.new(
                           Product.includes(:category),
-                          PaginatorService.new({number: 2, size: 1}),
-                          SortableService.new({sort: '-price'}),
-                          FilterableService.new({filter: {categories: 'sample'}})
+                          PaginatorService.new(number: 2, size: 1),
+                          SortableService.new(sort: '-price'),
+                          FilterableService.new(filter: { categories: 'sample' })
                         )
 
       expect(product_service_filter_category.products.pluck(:category_id).uniq).to eq [@category.id]

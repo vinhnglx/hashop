@@ -40,9 +40,9 @@ class ProductService
   #
   # Returns a list has been sorted, paging and filtering by type if needed.
   def products
-    products_list.
-      where(@filterable.filter_params).
-      order(@sortable.sort_params).
-      page(@paginator.current_page).per_page(@paginator.page_size)
+    products_list
+      .where(@filterable.filter_params)
+      .order(@sortable.sort_params)
+      .page(@paginator.current_page).per_page(@paginator.page_size)
   end
 end
