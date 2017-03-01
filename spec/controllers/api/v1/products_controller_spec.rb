@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Api::V1::ProductsController, type: :controller do
   context "GET index" do
     before do
-      2.times.each { create(:category) }
-      5.times.each { |n| create(:product, category: Category.all.sample, name: "Product #{n}", price: n) }
+      @category = create(:category, name: "sample")
+      5.times.each { |n| create(:product, category: @category, name: "Product #{n}", price: n) }
     end
 
     describe "returns all products" do
@@ -40,6 +40,16 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
           expect(URI.unescape(jdata['links']['prev'])).to eq "http://test.host/api/v1/products?page[number]=1&page[size]=1"
           expect(URI.unescape(jdata['links']['next'])).to eq "http://test.host/api/v1/products?page[number]=3&page[size]=1"
           expect(URI.unescape(jdata['links']['last'])).to eq "http://test.host/api/v1/products?page[number]=5&page[size]=1"
+        end
+      end
+
+      context "filtering" do
+        it "returns filtered products" do
+          get :index, params: { filter: { price: 3, categories: "sample" } }
+
+          jdata = JSON.parse response.body
+          expect(jdata['data'].map {|x| x['attributes']['price']}).to eq [3, 2, 1, 0]
+          expect(jdata['included'].map {|x| x['id'] if x['type'] == 'categories'}).to eq [@category.id.to_s]
         end
       end
     end
