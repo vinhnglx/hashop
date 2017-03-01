@@ -11,7 +11,7 @@ class FilterableService
   #
   # Example
   #
-  #   FilterableService.new({filter: { categories: "tool, brush", price: 59 }})
+  #   FilterableService.new({filter: { categories: "tool, brush", price: {lt: 59} }})
   #
   # Returns nothing
   def initialize(filter = {})
@@ -23,17 +23,17 @@ class FilterableService
   #
   # Example
   #
-  #   filter = FilterableService.new({filter: { categories: "tool, brush", price: 59 }})
+  #   filter = FilterableService.new({filter: { categories: "tool, brush", price: {lt: 59} }})
   #   filter.filter_params
   #
   # Returns a query object
   def filter_params
     if category_ids.present? && price_parameter
-      @arel[:category_id].in(category_ids).and(@arel[:price].lteq(price_parameter))
+      @arel[:category_id].in(category_ids).and(query_price)
     elsif category_ids.present?
       @arel[:category_id].in(category_ids)
     elsif price_parameter
-      @arel[:price].lteq(price_parameter)
+      query_price
     else
       DEFAULT_FILTER
     end
@@ -43,13 +43,34 @@ class FilterableService
   #
   # Example
   #
-  #   filter = FilterableService.new({filter: { categories: "tool, brush", price: 59 }})
+  #   filter = FilterableService.new({filter: { categories: "tool, brush", price: {lt: 59 } }})
   #   filter.price_parameter
-  #   # => 59
+  #   # => {lt: 59}
   #
-  # Returns price number
+  # Returns Hash price
   def price_parameter
-    filter.key?(:filter) ? filter[:filter][:price] : nil
+    return nil unless filter.key?(:filter)
+    filter[:filter][:price]
+  end
+
+  # Public: Handle cases of filter by price
+  #
+  # Example
+  #
+  #   fil = FilterableService.new({filter: { categories: "tool, brush", price: {lt: 59 } }})
+  #   fil.query_price
+  #
+  # Returns a query object for price
+  def query_price
+    return nil if price_parameter.nil?
+
+    if price_parameter.key?(:lt) && price_parameter.key?(:gt)
+      @arel[:price].gteq(price_parameter[:gt]).and(@arel[:price].lteq(price_parameter[:lt]))
+    elsif price_parameter.key?(:lt)
+      @arel[:price].lteq(price_parameter[:lt])
+    elsif price_parameter.key?(:gt)
+      @arel[:price].gteq(price_parameter[:gt])
+    end
   end
 
   # Public: Get categories name
