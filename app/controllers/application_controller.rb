@@ -4,17 +4,17 @@ class ApplicationController < ActionController::API
   # Example
   #
   #   get('/api/v230990/02390292')
-  #   # => { errors: [ { status: 404, title: 'Not Found' } ] }
+  #   # => { errors: [ { status: 400, title: 'Bad Request' } ] }
   #
   # Returns the JSON error message
   def routing_error
     render json: {
       errors: [
         {
-          status: 404,
-          title: "Not Found"
+          status: 400,
+          title: "Bad Request"
         }
       ]
-    }, status: 404
+    }, status: 400
   end
 end
