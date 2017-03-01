@@ -2,6 +2,7 @@ class PaginatorService
   attr_reader :page
 
   PER_PAGE = 5
+  CURRENT_PAGE = 1
 
   # Public: Create constructor
   #
@@ -27,7 +28,8 @@ class PaginatorService
   #
   # Returns page number
   def current_page
-    (page.dig(:page, :number) || 1).to_i
+    cur_page = page.key?(:page) ? page[:page][:number] : nil
+    (cur_page || CURRENT_PAGE).to_i
   end
 
   # Public: Get page size from parameter or default value
@@ -39,6 +41,7 @@ class PaginatorService
   #
   # Returns page size
   def page_size
-    (page.dig(:page, :size) || PER_PAGE).to_i
+    pge_size = page.key?(:page) ? page[:page][:size] : nil
+    (pge_size || PER_PAGE).to_i
   end
 end
