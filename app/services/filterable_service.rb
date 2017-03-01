@@ -49,7 +49,7 @@ class FilterableService
   #
   # Returns price number
   def price_parameter
-    filter.dig(:filter, :price)
+    filter.key?(:filter) ? filter[:filter][:price] : nil
   end
 
   # Public: Get categories name
