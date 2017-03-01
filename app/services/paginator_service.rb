@@ -1,7 +1,7 @@
 class PaginatorService
   attr_reader :page
 
-  PER_PAGE = 5.freeze
+  PER_PAGE = 5
 
   # Public: Create constructor
   #
