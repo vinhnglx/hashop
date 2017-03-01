@@ -46,7 +46,6 @@ All tasks available on Trello: https://trello.com/b/Rwz1PY4s
 
 The API documentation available on http://docs.hashop.apiary.io/
 
-## POSTMAN
+## Live example on Postman
 
 Interact with Hashop API by Postman: https://www.getpostman.com/collections/7bf06aec67822434bb36
-
