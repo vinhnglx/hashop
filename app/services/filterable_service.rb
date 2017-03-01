@@ -19,7 +19,6 @@ class FilterableService
     @arel = Product.arel_table
   end
 
-
   # Public: Create query
   #
   # Example
@@ -77,7 +76,7 @@ class FilterableService
   # Returns array of category ids
   def category_ids
     if categories_parameter
-      names = categories_parameter.gsub('"', '').split(", ")
+      names = categories_parameter.tr('"', '').split(", ")
       Category.where(name: names).ids
     end
   end
