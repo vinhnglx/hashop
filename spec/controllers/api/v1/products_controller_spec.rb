@@ -45,10 +45,10 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
 
       context "filtering" do
         it "returns filtered products" do
-          get :index, params: { filter: { price: 3, categories: "sample" } }
+          get :index, params: { filter: { price: { lt: 4, gt: 1 }, categories: "sample" } }
 
           jdata = JSON.parse response.body
-          expect(jdata['data'].map { |x| x['attributes']['price'] }).to eq [3, 2, 1, 0]
+          expect(jdata['data'].map { |x| x['attributes']['price'] }).to eq [4, 3, 2, 1]
           expect(jdata['included'].map { |x| x['id'] if x['type'] == 'categories' }).to eq [@category.id.to_s]
         end
       end

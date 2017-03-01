@@ -30,7 +30,7 @@ RSpec.describe ProductService do
                           Product.includes(:category),
                           PaginatorService.new(number: 2, size: 1),
                           SortableService.new(sort: '-price'),
-                          FilterableService.new(filter: { price: 3 })
+                          FilterableService.new(filter: { price: { lt: 3, gt: 0 } })
                         )
 
       expect(product_service_filter_price.products.pluck(:price)).to eq [3, 2, 1, 0]
