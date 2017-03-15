@@ -1,7 +1,12 @@
 class SortableService
   attr_reader :sort
 
-  DEFAULT_SORTING = { created_at: :desc }.freeze
+  DEFAULT_SORTING = "
+      CASE under_sale
+      WHEN 't' THEN sale_price
+      WHEN 'f' THEN price
+      END
+  "
   SORTABLE_FIELDS = ['price'].freeze
 
   # Public: Create constructor
