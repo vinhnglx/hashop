@@ -8,7 +8,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
     end
 
     describe "returns all products" do
-      it "returns with JSON body containing all products" do
+      it "returns with JSON body containing all sorted products default by under_sale" do
         get :index
         jdata = JSON.parse response.body
         expect(jdata['data'].length).to eq 5
@@ -48,7 +48,7 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
           get :index, params: { filter: { price: { lt: 4, gt: 1 }, categories: "sample" } }
 
           jdata = JSON.parse response.body
-          expect(jdata['data'].map { |x| x['attributes']['price'] }).to eq [4, 3, 2, 1]
+          expect(jdata['data'].map { |x| x['attributes']['price'] }).to eq [1, 2, 3, 4]
           expect(jdata['included'].map { |x| x['id'] if x['type'] == 'categories' }).to eq [@category.id.to_s]
         end
       end
